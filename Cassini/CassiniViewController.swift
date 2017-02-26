@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CassiniViewController: UIViewController
+class CassiniViewController: UIViewController, UISplitViewControllerDelegate
 {
   private struct Storyboard {
     static let ShowImageSegue = "Show Image"
@@ -26,6 +26,22 @@ class CassiniViewController: UIViewController
       }
     }
   }
+  
+  override func viewDidLoad() {
+      super.viewDidLoad()
+      splitViewController?.delegate = self
+    }
+  
+  // using splitview delegation to display Cassini VC at launch instead of ImageView VC
+  func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+    if primaryViewController.contentViewController == self {
+      if let ivc = secondaryViewController.contentViewController as? ImageViewController, ivc.imageURL == nil {
+        return true
+      }
+    }
+    return false
+  }
+  
 
 }
 
