@@ -10,7 +10,7 @@ import UIKit
 
 class ImageViewController: UIViewController, UIScrollViewDelegate {
   
-  var imageURL: NSURL? {
+  var imageURL: URL? {
     didSet {
       image = nil
       if view.window != nil { // if view is on screen
@@ -24,12 +24,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       spinner?.startAnimating()
       
       DispatchQueue.global(qos: .userInitiated).async {
-        let contentsOfURL = NSData(contentsOf: url as URL)
+        let contentsOfURL = try? Data(contentsOf: url)
         
         DispatchQueue.main.async {
           if url == self.imageURL {
             if let imageData = contentsOfURL {
-              self.image = UIImage(data: imageData as Data)
+              self.image = UIImage(data: imageData)
             } else {
               self.spinner?.stopAnimating()
             }

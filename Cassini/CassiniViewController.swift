@@ -21,7 +21,7 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate
     if segue.identifier == Storyboard.ShowImageSegue {
       if let ivc = segue.destination.contentViewController as? ImageViewController {
         let imageName = (sender as? UIButton)?.currentTitle
-        ivc.imageURL = DemoURL.NASAImageNamed(imageName: imageName)
+        ivc.imageURL = DemoURL.NASAImageNamed(imageName: imageName) as URL?
         ivc.title = imageName
       }
     }
@@ -31,7 +31,7 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate
   @IBAction func showImage(_ sender: UIButton) {
     if let ivc = splitViewController?.viewControllers.last?.contentViewController as? ImageViewController {
       let imageName = sender.currentTitle
-      ivc.imageURL = DemoURL.NASAImageNamed(imageName: imageName)
+      ivc.imageURL = DemoURL.NASAImageNamed(imageName: imageName) as URL?
       ivc.title = imageName
     } else {
       performSegue(withIdentifier: Storyboard.ShowImageSegue, sender: sender) // code segue for iphone (non splitview)
